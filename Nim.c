@@ -24,7 +24,7 @@ void printHeaps(int heaps[], int size) {
 // Mô phỏng người chơi.
 void playerTurn(int heaps[], int size) {
     int heapIndex, numStones;
-    printf("Mời bạn chọn thứ tự đống sỏi và số lượng sỏi bốc ra (vd:1 3 lấy 3 viên sỏi từ đống 1): \n");
+    printf("Mời bạn chọn thứ tự đống sỏi và số lượng sỏi bốc ra (vd:1 3 lấy 3 viên sỏi từ đống 1): ");
     scanf("%d %d", &heapIndex, &numStones);
 
     // Vi array bắt đầu từ 0 chứ không phải 1, nên giảm xún 1
@@ -80,7 +80,6 @@ int main() {
 
     // 3- Random người hay máy đi trước 
     int playerFirst = rand() % 2; // random 0 or 1
-    printf("%d", playerFirst );
     int currentPlayer = playerFirst;
 
     // Toán tử 3 ngôi
@@ -95,8 +94,10 @@ int main() {
         // Play
         if (currentPlayer) {
             playerTurn(heaps, heapCount);
+            printf("\n");
         } else {
             computerTurn(heaps, heapCount);
+            printf("\n");
         }
 
         // Đổi lượt chơi
@@ -104,7 +105,7 @@ int main() {
     }
     
     // 5- Thong bao ket qua cuoi cung
-    printf(currentPlayer ? "Máy wins!" : "Bạn wins! \n");
+    printf(currentPlayer ? "Máy wins! \n" : "Bạn wins! \n");
     printf("Bravo!!! Bravo!!!");
     return 0;
 }
