@@ -68,8 +68,7 @@ void computerTurn(int heaps[], int size) {
     // tinh tong XOR cua tat ca cac dong soi
     for (int i = 0; i < size; i++) {
         totalXor ^= heaps[i];
-    }
-    
+    }    
     
     for (int i = 0; i < size; i++) {
         if ((heaps[i] ^ totalXor) < heaps[i]) { // xac dinh xem may co the lay 1 so stone from head i de tao ra tong XOR moi hay k
@@ -94,28 +93,28 @@ int isGameOver(int heaps[], int size) {
     int total = 0;
     for (int i = 0; i < size; i++) {
         if(heaps[i] > 0){
-        	return 0; //O: still stones to play
-		}
+            return 0; //O: still stones to play
+        }
     }
     return 1;
 }
 
 int main() {
-	int heapCount, mode;
+    int heapCount, mode;
     int gd = DETECT, gm;
     initgraph(&gd, &gm, NULL);
-
-	printf("==================================WELLCOME==================================\n");
-	printf("NIM Information!!!\n");
-	printf("1 : Player vs Player\n");
-	printf("2 : Computer vs Player\n");
-	printf("----------------------------------------------------------------------------\n");
+    
+    printf("==================================WELLCOME==================================\n");
+    printf("NIM Information!!!\n");
+    printf("1 : Player vs Player\n");
+    printf("2 : Computer vs Player\n");
+    printf("----------------------------------------------------------------------------\n");
 	
-	printf("Please choose mode (1 or 2):");
+    printf("Please choose mode (1 or 2):");
     scanf("%d", &mode);
     
     // Validate
-	if(mode <= 0 || mode > 2) {
+    if(mode <= 0 || mode > 2) {
     printf("Invalid mode. Please enter again: ", MAX_HEAPS);
     scanf("%d", &heapCount);
 	}
@@ -156,8 +155,7 @@ int main() {
                 outtextxy(50, 50, "Congras, you win!");
                 printf("Congras, you win!");
             }
-        }
-        else{
+        }else{
             computerTurn(heaps, heapCount);
             if(isGameOver(heaps, heapCount)){
                 outtextxy(50, 50, "Sorry, you lose!");
