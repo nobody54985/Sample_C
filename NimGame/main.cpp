@@ -151,20 +151,18 @@ int main() {
 
         if (currentPlayer) {
             playerTurn(heaps, heapCount);
-            
             // if gameover will show last line
-			if(isGameOver(heaps, heapCount)){
+            if(isGameOver(heaps, heapCount)){
                 outtextxy(50, 50, "Congras, you win!");
                 printf("Congras, you win!");
-			}
+            }
         }
         else{
             computerTurn(heaps, heapCount);
-            
             if(isGameOver(heaps, heapCount)){
-				outtextxy(50, 50, "Sorry, you lose!");
-				printf("Sorry, you lose!");
-			}
+                outtextxy(50, 50, "Sorry, you lose!");
+                printf("Sorry, you lose!");
+            }
         }
         
         // Change turn play
