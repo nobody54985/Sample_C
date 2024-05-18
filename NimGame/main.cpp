@@ -17,9 +17,8 @@ void drawHeaps(int heaps[], int size) {
         char heapLabel[2];
         sprintf(heapLabel, "%d", i+1); // output the number of heaps
         outtextxy(50 + i * 55 - 5, getmaxy() - 8, heapLabel); // output stone
-
-		setcolor(YELLOW);
         
+        setcolor(YELLOW);
         // draw circle based on xy coordinates
         for (int j = 0; j < heaps[i]; j++) {
             int radius = 10;
@@ -148,22 +147,21 @@ int main() {
     
     // 4- Check and play
     while (!isGameOver(heaps, heapCount)) {
+        drawHeaps(heaps, heapCount);
 
-		drawHeaps(heaps, heapCount);
-		
         if (currentPlayer) {
-			playerTurn(heaps, heapCount);
-			
-			// if gameover will show last line
+            playerTurn(heaps, heapCount);
+            
+            // if gameover will show last line
 			if(isGameOver(heaps, heapCount)){
-				outtextxy(50, 50, "Congras, you win!");
-				printf("Congras, you win!");
+                outtextxy(50, 50, "Congras, you win!");
+                printf("Congras, you win!");
 			}
         }
         else{
-			computerTurn(heaps, heapCount);
-			
-			if(isGameOver(heaps, heapCount)){
+            computerTurn(heaps, heapCount);
+            
+            if(isGameOver(heaps, heapCount)){
 				outtextxy(50, 50, "Sorry, you lose!");
 				printf("Sorry, you lose!");
 			}
