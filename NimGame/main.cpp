@@ -16,13 +16,13 @@ void drawHeaps(int heaps[], int size) {
     	
         char heapLabel[2];
         sprintf(heapLabel, "%d", i+1); // output the number of heaps
-        outtextxy(50 + i * 55 - 5, getmaxy() - 8, heapLabel); // output stone
+        outtextxy(50 + i * 50, getmaxy() - 10, heapLabel); // output stone
         
         setcolor(YELLOW);
         // draw circle based on xy coordinates
         for (int j = 0; j < heaps[i]; j++) {
             int radius = 10;
-            int x = 50 + i * 55;
+            int x = 55 + i * 50;
             int y = getmaxy() - (j * 20 + radius * 3);
             circle(x, y, radius);
         }
@@ -38,11 +38,26 @@ void generateHeaps(int heaps[], int size) {
 }
 
 // Simulates how to players play
-void playerTurn(int heaps[], int size) {
+void playerTurn(int heaps[], int size, int mode, int currentPlayer) {
     int heapIndex, numStones;
     
-    printf("Please pick number of heaps and stone (Ex: 1 3 will pick 3stone from heap 1):");
-    scanf("%d %d", &heapIndex, &numStones);
+    // Player vs Player
+    if (mode == 0 )
+    {
+    	if (currentPlayer)
+    	{
+    		printf("Player 1: Please pick number of heaps and stone (Ex: 1 3 will pick 3stone from heap 1):");
+	    	scanf("%d %d", &heapIndex, &numStones); 
+		}else{
+    		printf("Player 2: Please pick number of heaps and stone (Ex: 1 3 will pick 3stone from heap 1):");
+	    	scanf("%d %d", &heapIndex, &numStones); 			
+		}
+   	
+	}else{ // Computer vs Player
+	    printf("Please pick number of heaps and stone (Ex: 1 3 will pick 3stone from heap 1):");
+	    scanf("%d %d", &heapIndex, &numStones);
+	}
+
 
     // because array start from -1, decrease 1
     heapIndex--;
@@ -55,7 +70,7 @@ void playerTurn(int heaps[], int size) {
         printf("Invalid number.\n");
 
         // Re-enter
-        playerTurn(heaps, size);
+        playerTurn(heaps, size, mode, currentPlayer);
     }
 }
 
@@ -101,7 +116,7 @@ int isGameOver(int heaps[], int size) {
 
 int main() {
     int heapCount, mode;
-    int gd = DETECT, gm;
+    int gd = VGA, gm;
     initgraph(&gd, &gm, NULL);
     
     printf("==================================WELLCOME==================================\n");
@@ -110,13 +125,13 @@ int main() {
     printf("2 : Computer vs Player\n");
     printf("----------------------------------------------------------------------------\n");
 	
-    printf("Please choose mode (1 or 2):");
+    printf("Please choose mode (0 or 1):");
     scanf("%d", &mode);
     
     // Validate
-    if(mode <= 0 || mode > 2) {
-    printf("Invalid mode. Please enter again: ", MAX_HEAPS);
-    scanf("%d", &heapCount);
+    if(mode < 0 || mode > 1) {
+    	printf("Invalid mode. Please enter again: ");
+    	scanf("%d", &mode);
 	}
 	
 	// 1- So dong soi nhap tu ban phim
@@ -142,27 +157,51 @@ int main() {
     int currentPlayer = playerFirst;
     
     // playerFirst random = 1 -> true, random 0 -> flase
-    printf(playerFirst ? "Random play: layer first\n" : "Random play: Computer first\n");
+    if (mode == 0)
+    {
+    	printf(playerFirst ? "Random play: Player 1 first.\n" : "Random play: Player 2 first.\n");
+	}else{
+		printf(playerFirst ? "Random play: Player first.\n" : "Random play: Computer first.\n");
+	}
     
     // 4- Check and play
     while (!isGameOver(heaps, heapCount)) {
         drawHeaps(heaps, heapCount);
-
-        if (currentPlayer) {
-            playerTurn(heaps, heapCount);
+        
+        // Player vs Player
+		if (mode == 0)
+		{
+            playerTurn(heaps, heapCount, mode, currentPlayer);
+            
             // if gameover will show last line
             if(isGameOver(heaps, heapCount)){
-                outtextxy(50, 50, "Congras, you win!");
-                printf("Congras, you win!");
+            	if (currentPlayer)
+            	{
+					outtextxy(50, 50, "Congras, player1 win!!");
+	            	printf("Congras, player1 win!!!");            		
+				}else{
+					outtextxy(50, 50, "Congras, player2 win!!");
+	            	printf("Congras, player2 win!!!");     
+				}
+
             }
-        }else{
-            computerTurn(heaps, heapCount);
-            if(isGameOver(heaps, heapCount)){
-                outtextxy(50, 50, "Sorry, you lose!");
-                printf("Sorry, you lose!");
-            }
-        }
-        
+		}else{ //Computer vs Player
+			if (currentPlayer) {
+	            playerTurn(heaps, heapCount, mode, currentPlayer);
+	            // if gameover will show last line
+	            if(isGameOver(heaps, heapCount)){
+	                outtextxy(50, 50, "Congras, you win!");
+	                printf("Congras, you win!");
+	            }
+	        }else{
+	            computerTurn(heaps, heapCount);
+	            if(isGameOver(heaps, heapCount)){
+	                outtextxy(50, 50, "Sorry, you lose!");
+	                printf("Sorry, you lose!");
+	            }
+	        }
+		}
+		
         // Change turn play
         currentPlayer = !currentPlayer;
     }
